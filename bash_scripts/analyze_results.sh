@@ -1,14 +1,8 @@
-#!/bin/sh
-#SBATCH --partition cpu 
-#SBATCH -c 2
-#SBATCH --output bootstrap%A.log
-#SBATCH --mem 50gb
-
 set -e
 source activate hurtfulwords
 
-BASE_DIR="/h/haoran/projects/HurtfulWords"
-OUTPUT_DIR="/h/haoran/projects/HurtfulWords/data/"
+BASE_DIR="/home/dom_dillingham/HurtfulWords"
+OUTPUT_DIR="/home/dom_dillingham/HurtfulWords/data"
 cd "$BASE_DIR/scripts"
 
 python analyze_results.py \

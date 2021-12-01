@@ -5,7 +5,7 @@ sys.path.append(os.getcwd())
 import pandas as pd
 import numpy as np
 import pickle
-from pytorch_pretrained_bert import BertTokenizer, BertModel
+from transformers import AutoTokenizer, AutoModel
 import argparse
 import spacy
 import re
@@ -17,8 +17,9 @@ parser.add_argument('output_loc', help = "path to output the dataframe", type=st
 parser.add_argument("model_path", help = 'folder with trained BERT model and tokenizer', type=str)
 args = parser.parse_args()
 
-tokenizer = BertTokenizer.from_pretrained(args.model_path)
-model = BertModel.from_pretrained(args.model_path)
+model_name = "microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract"
+model = AutoModel.from_pretrained(model_name)
+tokenizer = AutoTokenizer.from_pretrained(model_name)
 
 df = pd.read_pickle(args.input_loc)
 

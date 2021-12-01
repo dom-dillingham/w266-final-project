@@ -35,11 +35,12 @@ cols = ['Acute and unspecified renal failure',
 std_models = ['biobert_v1.0_pubmed_pmc']
 
 # file name, col names, models
-tasks = [('inhosp_mort', ['inhosp_mort'],  std_models),
-         ('phenotype_all', cols, std_models),
-         ('phenotype_first', cols, std_models) ]
+tasks = [('phenotype_first_pubmed', cols, std_models),
+        ('phenotype_all_pubmed', cols, std_models),
+        ('inhosp_mort_pubmed', ['inhosp_mort'], std_models)
+        ]
 
 for dfname, targetnames, models in tasks:
     for t in targetnames:
         for c,m in enumerate(models):
-            subprocess.call(shlex.split('sbatch finetune_on_target.sh "%s" "%s" "%s"'%(dfname,m,t)))
+            subprocess.call(shlex.split('/home/dom_dillingham/HurtfulWords/bash_scripts/finetune_on_target_unfreeze.sh "%s" "%s" "%s"'%(dfname,m,t)))

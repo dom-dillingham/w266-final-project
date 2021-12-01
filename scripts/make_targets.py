@@ -29,17 +29,13 @@ def preprocessing(row):
             seqs.append(' '.join(row.toks[j*Constants.SLIDING_DIST:(j+1)*Constants.SLIDING_DIST+(Constants.MAX_SEQ_LEN - Constants.SLIDING_DIST-2)]))
     return seqs
 
-#df = pd.read_pickle(args.processed_df.resolve())
 
-#df1 = pd.read_pickle('/home/dom_dillingham/finalproject/HurtfulWords/data/first_A_run1.pkl')
-#print('df1_done')
 df2 = pd.read_pickle('/home/dom_dillingham/finalproject/HurtfulWords/data/first_B_run1.pkl')
 print('df2_done')
 df1 = pd.read_pickle('/home/dom_dillingham/finalproject/HurtfulWords/data/first_A_run1.pkl')
 print('df1_done')
 
 df = pd.concat([df1, df2])
-
 del df1, df2
 
 print('read_final')
@@ -135,7 +131,7 @@ def agg_notes(notes, first = False, intime = None, timeDiff = pd.Timedelta(hours
         'num_seqs': len(seqs),
     }, **{i: notes.iloc[0][i] for i in other_features}}
 
-"""
+
 temp = []
 for i in range(train_reader.get_number_of_examples()):
     ex = train_reader.read_example(i)
@@ -167,7 +163,7 @@ for c,j in enumerate(kf.split(subjects, groups = subjects['inhosp_mort'])):
 print('pre save 1')
 t2.to_pickle(args.output_dir / 'inhosp_mort')
 
-del temp, dic, t2, kf 
+del temp, dic, t2, kf
 
 print('finish in hosptial')
 
@@ -185,7 +181,7 @@ Physician, Discharge Summary
 - We also add in the following targets, aggregated from the specific
 phenotypes: Any acute, Any chronic, Any disease
 '''
-"""
+
 with open('../icd9_codes.yml', 'r') as f:
     ccs = pd.DataFrame.from_dict(yaml.load(f)).T
 
@@ -200,7 +196,7 @@ temp = []
 def has_any(dic, keys):
     return any([dic[i] == 1 for i in keys])
 
-"""
+
 for i in range(train_reader.get_number_of_examples()):
     ex = train_reader.read_example(i)
     notes = read_patient(ex['name'], float(ex['t']), ['Nursing', 'Physician ', 'Nursing/other', 'Discharge summary'])
@@ -255,7 +251,7 @@ If this does not exist, we take the first nursing/other note within the first 48
 - If they do not have a nursing note within 48 hours of their intime, the
 patient is dropped.
 '''
-"""
+
 
 print('start first thing')
 train_reader = PhenotypingReader(dataset_dir=args.mimic_benchmark_dir/'phenotyping' / 'train')
@@ -305,4 +301,3 @@ for c,j in enumerate(kf.split(subjects, groups = subjects['any_disease'])):
     for k in j[1]:
         t4.loc[t4['subject_id'] == subjects.loc[k]['subject_id'], 'fold'] = str(c+1)
 t4.to_pickle(args.output_dir / 'phenotype_first')
-

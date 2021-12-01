@@ -1,12 +1,9 @@
-set -e 
+set -e
 source activate hurtfulwords
 
-BASE_DIR="/h/haoran/projects/HurtfulWords/" 
-OUTPUT_DIR="/h/haoran/projects/HurtfulWords/data/"
-#MODEL_NAME="baseline_clinical_BERT_1_epoch_512"
-#MODEL_NAME="adv_clinical_BERT_1_epoch_512" 
-MODEL_NAME="SciBERT"
-
+BASE_DIR="/home/dom_dillingham/HurtfulWords"
+OUTPUT_DIR="/home/dom_dillingham/HurtfulWords/data//"
+MODEL_NAME="pubmed"
 cd "$BASE_DIR/scripts"
 
 python log_probability_bias_scores.py \
@@ -14,7 +11,6 @@ python log_probability_bias_scores.py \
     --demographic 'GEND' \
     --template_file "${BASE_DIR}/fill_in_blanks_examples/templates.txt" \
     --attributes_file "${BASE_DIR}/fill_in_blanks_examples/attributes.csv" \
-    --out_file "${OUTPUT_DIR}/${MODEL_NAME}_log_scores.tsv" 
- 
-python statistical_significance.py "${OUTPUT_DIR}/${MODEL_NAME}_log_scores.tsv" > "${OUTPUT_DIR}/${MODEL_NAME}_log_score_significance.txt"
+    --out_file "${OUTPUT_DIR}/${MODEL_NAME}_log_scores.tsv"
 
+python statistical_significance.py "${OUTPUT_DIR}/${MODEL_NAME}_log_scores.tsv" > "${OUTPUT_DIR}/${MODEL_NAME}_log_score_significance.txt"
