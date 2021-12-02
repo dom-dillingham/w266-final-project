@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 from sklearn.model_selection import KFold
 import Constants
 import sys
@@ -11,7 +11,7 @@ output_folder.mkdir(parents = True, exist_ok = True)
 
 data_path = '~/finalproject/physionet.org/files/mimiciii/1.4'
 
-use_cols = ['SUBJECT_ID', 
+use_cols = ['SUBJECT_ID',
             'GENDER',
             'DOB',
             'DOD']
@@ -28,14 +28,14 @@ kf = KFold(n_splits = n_splits, shuffle = True, random_state = 42)
 for c,i in enumerate(kf.split(patients_filtered, groups = patients_filtered.GENDER)):
     patients_filtered.loc[i[1], 'fold'] = str(c)
 
-use_cols = ['SUBJECT_ID', 
+use_cols = ['SUBJECT_ID',
             'HADM_ID',
             'INSURANCE',
             'LANGUAGE',
             'RELIGION',
             'ETHNICITY',
             'ADMITTIME',
-            'DEATHTIME', 
+            'DEATHTIME',
             'DISCHTIME',
             'HOSPITAL_EXPIRE_FLAG',
             'DISCHARGE_LOCATION',
@@ -46,7 +46,7 @@ admissions_filtered = admissions.loc[:, admissions.columns.isin(use_cols)]
 
 del admissions
 
-joined = pd.merge(patients_filtered, admissions_filtered, 
+joined = pd.merge(patients_filtered, admissions_filtered,
                      on='SUBJECT_ID', how='inner')
 
 def merge_death(row):
@@ -123,7 +123,6 @@ def map_lang(x):
 
 joined['LANGUAGE_to_use'] = joined['LANGUAGE'].apply(map_lang)
 
-## Not sure if we need this?
 joined.loc[(joined.CATEGORY == 'Discharge summary') |
        (joined.CATEGORY == 'Echo') |
        (joined.CATEGORY == 'ECG'), 'fold'] = 'NA'
@@ -143,7 +142,7 @@ acuities = pd.merge(oasis, sofa, how = 'outer', on = ['subject_id', 'hadm_id', '
 acuities = pd.merge(acuities, sapsii, how = 'outer', on = ['subject_id', 'hadm_id', 'icustay_id'])
 
 
-use_cols = ['SUBJECT_ID', 
+use_cols = ['SUBJECT_ID',
             'HADM_ID',
             'ICUSTAY_ID',
             'INTIME',

@@ -14,7 +14,7 @@ python sentence_tokenization.py "$OUTPUT_DIR/df_raw.pkl" "$OUTPUT_DIR/df_extract
 rm "$OUTPUT_DIR/df_raw.pkl"
 
 echo "Generating finetuning targets..."
-python make_targets_small.py \
+python make_targets.py \
 	--processed_df "$OUTPUT_DIR/df_extract.pkl" \
 	--mimic_benchmark_dir "$MIMIC_BENCHMARK_DIR" \
 	--output_dir "$OUTPUT_DIR/finetuning/"

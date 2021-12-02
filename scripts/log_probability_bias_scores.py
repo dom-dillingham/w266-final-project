@@ -1,6 +1,6 @@
 import torch
 import torch.nn.functional as F
-from pytorch_pretrained_bert import BertTokenizer, BertForMaskedLM
+from transformers import AutoTokenizer, AutoForMaskedLM
 import pandas as pd
 import numpy as np
 import argparse
@@ -16,7 +16,6 @@ parser.add_argument('--attributes_file', type=str)
 parser.add_argument('--out_file', type=str)
 args = parser.parse_args()
 
-BERT_MODEL = args.model
 DEMOGRAPHIC = args.demographic
 TEMPLATE_FILE = args.template_file
 ATTRIBUTES_FILE = args.attributes_file
@@ -25,8 +24,9 @@ OUT_FILE = args.out_file
 ####################################
 
 # Load pre-trained model with masked language model head
-model = BertForMaskedLM.from_pretrained(BERT_MODEL)
-tokenizer = BertTokenizer.from_pretrained(BERT_MODEL)
+model_name = "microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract"
+model = AutoForMaskedLM.from_pretrained(model_name)
+tokenizer = AutoTokenizer.from_pretrained(model_name)
 
 # Load dataframe with attributes to permute through
 attr_df = pd.read_csv(ATTRIBUTES_FILE, sep=',')

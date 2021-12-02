@@ -1,10 +1,3 @@
-#!/bin/bash
-#SBATCH --partition t4
-#SBATCH --gres gpu:1
-#SBATCH -c 8
-#SBATCH --output=finetune_%A.out
-#SBATCH --mem 60gb
-
 # $1 - target type {inhosp_mort, phenotype_first, phenotype_all}
 # $2 - BERT model name {baseline_clinical_BERT_1_epoch_512, adv_clinical_BERT_1_epoch_512}
 # $3 - target column name within the dataframe, ex: "Shock", "any_acute"

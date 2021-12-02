@@ -6,4 +6,8 @@ Code for this project was modified from the original paper our projects seeks to
 
 ## Data & Data Processing
 
-Data for this project was obtained from PhysioNet for the purpose of this research project. Given the PPI associated with the clinical notes in this dataset, access is restricted for research purposes. Data must first be obtained from PhysioNet, run through PhysioNet's scripts to generate the necessary supplementary targets such as the Sequential Organ Failure Assessment (SOFA) Score, and then run through the data processing pipeline present in this repo and outlined in the original repo. 
+Data for this project was obtained from PhysioNet for the purpose of this research project. Given the PPI associated with the clinical notes in this dataset, access is restricted for research purposes. Data must first be obtained from PhysioNet, run through PhysioNet's scripts to generate the necessary supplementary targets such as the Sequential Organ Failure Assessment (SOFA) Score, and then run through the data processing pipeline present in this repo and outlined in the original repo.
+
+## To Recreate
+
+As mentioned above, the core of the data work should follow from the directions from the source paper using the scripts in this repo for performance optimizations. The remainder of the scripts are setup for the PubMedBERT version of the scripts. The pretrained models are sources using the `biobertology` package for BioBERT for a PyTorch version of BioBERT.  

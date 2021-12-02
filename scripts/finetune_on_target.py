@@ -10,7 +10,7 @@ import torch
 import torch.nn as nn
 from torch.utils import data
 import pickle
-from pytorch_pretrained_bert import BertTokenizer, BertModel
+#from pytorch_pretrained_bert import BertTokenizer, BertModel
 from run_classifier_dataset_utils import InputExample, convert_examples_to_features
 from pathlib import Path
 from tqdm import tqdm
@@ -22,6 +22,7 @@ import json
 from pytorch_pretrained_bert.file_utils import WEIGHTS_NAME, CONFIG_NAME
 from utils import create_hdf_key, Classifier, get_emb_size, MIMICDataset, extract_embeddings, EarlyStopping, load_checkpoint
 from sklearn.model_selection import ParameterGrid
+from transformers import AutoTokenizer, AutoModel
 
 parser = argparse.ArgumentParser('Fine-tunes a pre-trained BERT model on a certain target for one fold. Outputs fine-tuned BERT model and classifier, ' +
                                  'as well as a pickled dictionary mapping id: predicted probability')
@@ -66,8 +67,10 @@ df = pd.read_pickle(args.df_path)
 if 'note_id' in df.columns:
     df = df.set_index('note_id')
 
-tokenizer = BertTokenizer.from_pretrained(args.model_path)
-model = BertModel.from_pretrained(args.model_path)
+model_name = "microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract"
+
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModel.from_pretrained(model_name)
 
 target = args.target_col_name
 assert(target in df.columns)
@@ -655,4 +658,3 @@ pickle.dump({
 'optimal_cs': optimal_cs,
 'opt_c': opt_c
     }, open(os.path.join(args.output_dir, 'gs_info.pkl'), 'wb'))
-
